@@ -1,19 +1,25 @@
-import { expect } from "chai";
+// import { expect } from "chai";
 import { ethers } from "hardhat";
 
 describe("Greeter", function () {
   it("Should return the new greeting once it's changed", async function () {
-    const Greeter = await ethers.getContractFactory("Greeter");
-    const greeter = await Greeter.deploy("Hello, world!");
-    await greeter.deployed();
+    const First = await ethers.getContractFactory("First");
+    const first = await First.deploy();
+    await first.deployed();
 
-    expect(await greeter.greet()).to.equal("Hello, world!");
+    const tokenPrice = await first.tokenPrice();
 
-    const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+    const inEth = ethers.utils.formatEther(tokenPrice);
 
-    // wait until the transaction is mined
-    await setGreetingTx.wait();
+    console.log({ wei: tokenPrice, eth: inEth });
 
-    expect(await greeter.greet()).to.equal("Hola, mundo!");
+    // expect(await greeter.greet()).to.equal("Hello, world!");
+
+    // const setGreetingTx = await greeter.setGreeting("Hola, mundo!");
+
+    // // wait until the transaction is mined
+    // await setGreetingTx.wait();
+
+    // expect(await greeter.greet()).to.equal("Hola, mundo!");
   });
 });
